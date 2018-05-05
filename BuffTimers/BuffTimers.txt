@@ -1,0 +1,31 @@
+## Title: BuffTimers
+## Author: coolmodi, Uta
+## Version: 2.0.0
+## APIVersion: 100022
+## SavedVariables: BuffTimersSavedVariables
+## OptionalDependsOn: LibAddonMenu-2.0 LibStub
+
+Libraries/LibStub/LibStub.lua
+
+Libraries/LibAddonMenu-2.0/LibAddonMenu-2.0.lua
+Libraries/LibAddonMenu-2.0/controls/button.lua
+Libraries/LibAddonMenu-2.0/controls/checkbox.lua
+Libraries/LibAddonMenu-2.0/controls/colorpicker.lua
+Libraries/LibAddonMenu-2.0/controls/dropdown.lua
+Libraries/LibAddonMenu-2.0/controls/editbox.lua
+Libraries/LibAddonMenu-2.0/controls/header.lua
+Libraries/LibAddonMenu-2.0/controls/iconpicker.lua
+Libraries/LibAddonMenu-2.0/controls/panel.lua
+Libraries/LibAddonMenu-2.0/controls/slider.lua
+Libraries/LibAddonMenu-2.0/controls/submenu.lua
+
+Modules/Constants.lua
+Modules/ConvertOldData.lua
+Modules/Debug.lua
+Modules/Events.lua
+Modules/Notification.lua
+Modules/Profiles.lua
+Modules/Settings.lua
+Modules/Window.lua
+
+BuffTimers.lua
