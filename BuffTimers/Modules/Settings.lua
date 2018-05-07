@@ -330,6 +330,15 @@ function BuffTimers:SettingsBuildMenu()
             end,
           },
           {
+            type = 'checkbox',
+            name = 'Reverse Bar Direction',
+            getFunc = function() return self.settings.barData[i].reverse end,
+            setFunc = function()
+              self.settings.barData[i].reverse = not self.settings.barData[i].reverse
+              self:WindowApplySettings(i, self.settings.barData[i])
+            end,
+          },
+          {
             type = 'colorpicker',
             name = 'Bar Color Left',
             getFunc = function() return self.settings.barData[i].colorBar[1], self.settings.barData[i].colorBar[2], self.settings.barData[i].colorBar[3], self.settings.barData[i].colorBar[4] end,
@@ -699,21 +708,41 @@ function BuffTimers:SettingsLoad()
 end
 
 function BuffTimers:SettingsLoadBars()
+  local dstData
+  local srcData
   for i=1, self.settings.numberBars do
-    if self.settings.barData[i] == nil then
-      self.settings.barData[i] = ZO_DeepTableCopy(self.defaultBarData)
-      self.settings.barData[i].offset.y = self.settings.barData[i].offset.y + (50 * i)
+    dstData = self.settings.barData[i]
+    if dstData == nil then
+      dstData = ZO_DeepTableCopy(self.defaultBarData)
+      dstData.offset.y = dstData.offset.y + (50 * i)
+    else
+      self:SettingsLoadBarsCopyDefaults(dstData)
     end
   end
   for i=1, #self.groupBuffs do
-    local buffData = self.groupBuffs[i]
-    if self.settings.groupBuffData[buffData.barNumber] == nil then
-      self.settings.groupBuffData[buffData.barNumber] = ZO_DeepTableCopy(self.defaultBarData)
-      self.settings.groupBuffData[buffData.barNumber].track         = false
-      self.settings.groupBuffData[buffData.barNumber].offset.x      = self.settings.groupBuffData[buffData.barNumber].offset.x + 200
-      self.settings.groupBuffData[buffData.barNumber].offset.y      = self.settings.groupBuffData[buffData.barNumber].offset.y + (50 * i)
-      self.settings.groupBuffData[buffData.barNumber].buffName      = buffData.name
-      self.settings.groupBuffData[buffData.barNumber].icon.texture  = buffData.iconTexture
+    srcData = self.groupBuffs[i]
+    dstData = self.settings.groupBuffData[srcData.barNumber]
+    if dstData == nil then
+      dstData = ZO_DeepTableCopy(self.defaultBarData)
+      dstData.track         = false
+      dstData.offset.x      = dstData.offset.x + 200
+      dstData.offset.y      = dstData.offset.y + (50 * i)
+      dstData.buffName      = srcData.name
+      dstData.icon.texture  = srcData.iconTexture
+    else
+      self:SettingsLoadBarsCopyDefaults(dstData)
+    end
+  end
+end
+
+function BuffTimers:SettingsLoadBarsCopyDefaults(dstData)
+  for k, v in pairs(self.defaultBarData) do
+    if dstData[k] == nil then
+      if type(v) == 'table' then
+        dstData[k] = ZO_DeepTableCopy(v)
+      else
+        dstData[k] = v
+      end
     end
   end
 end

@@ -9,6 +9,15 @@ function BuffTimers:WindowApplySettings(barNumber, settings)
   self.windows[barNumber].background:SetEdgeColor(unpack(settings.colorEdge))
   self.windows[barNumber].background:SetCenterColor(unpack(settings.colorBackground))
   self.windows[barNumber].bar:SetGradientColors(unpack(settings.colorBar))
+  if settings.reverse then
+    self.windows[barNumber].bar:SetBarAlignment(1)
+    self.windows[barNumber].icon:ClearAnchors()
+    self.windows[barNumber].icon:SetAnchor(LEFT, self.windows[barNumber].container, RIGHT, -1, 0)
+  else
+    self.windows[barNumber].bar:SetBarAlignment(0)
+    self.windows[barNumber].icon:ClearAnchors()
+    self.windows[barNumber].icon:SetAnchor(RIGHT, self.windows[barNumber].container, LEFT, -1, 0)
+  end
   self.windows[barNumber].label:SetFont('$(BOLD_FONT)|'..tostring(settings.textSize)..'|soft-shadow-thin')
   self.windows[barNumber].icon:SetHidden(not settings.icon.show)
   self.windows[barNumber].icon:SetWidth(settings.icon.size)
@@ -44,7 +53,6 @@ function BuffTimers:WindowCreate(barNumber)
   self.windows[barNumber].label:SetColor(1, 1, 1, 1)
 
   self.windows[barNumber].icon = WINDOW_MANAGER:CreateControl('$(parent)Icon', self.windows[barNumber].container, CT_TEXTURE)
-  self.windows[barNumber].icon:SetAnchor(RIGHT, self.windows[barNumber].container, LEFT, -1, 0)
 
   self:WindowSetValue(barNumber, 0)
 

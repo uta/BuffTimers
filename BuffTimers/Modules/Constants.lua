@@ -1,6 +1,6 @@
 BuffTimers = {
   name    = 'BuffTimers',
-  version = '2.0.0',
+  version = '2.18.0',
   author  = 'coolmodi, Uta',
 }
 
@@ -14,6 +14,7 @@ BuffTimers.defaultBarData = {
   width           = 200,
   height          = 30,
   textSize        = 20,
+  reverse         = false,
   colorBar        = {1,0,0,1,0,1,0,1},
   colorEdge       = {0,0,0,1},
   colorBackground = {0.2,0.2,0.2,0.4},
