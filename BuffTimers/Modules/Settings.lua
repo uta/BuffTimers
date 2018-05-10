@@ -552,6 +552,15 @@ function BuffTimers:SettingsBuildMenu()
           end,
         },
         {
+          type = 'checkbox',
+          name = 'Reverse Bar Direction',
+          getFunc = function() return self.settings.groupBuffData[barNumber].reverse end,
+          setFunc = function()
+            self.settings.groupBuffData[barNumber].reverse = not self.settings.groupBuffData[barNumber].reverse
+            self:WindowApplySettings(barNumber, self.settings.groupBuffData[barNumber])
+          end,
+        },
+        {
           type = 'colorpicker',
           name = 'Bar Color Left',
           getFunc = function() return self.settings.groupBuffData[barNumber].colorBar[1], self.settings.groupBuffData[barNumber].colorBar[2], self.settings.groupBuffData[barNumber].colorBar[3], self.settings.groupBuffData[barNumber].colorBar[4] end,
