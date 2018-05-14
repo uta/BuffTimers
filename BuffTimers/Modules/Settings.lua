@@ -707,7 +707,7 @@ function BuffTimers:SettingsLoad()
   self.profiles = ZO_SavedVars:NewAccountWide('BuffTimersSavedVariables', 1, nil, defaultProfiles, nil, '$InstallationWide')
 
   local defaultPlayer = {
-    activeProfile = 1,
+    activeProfile = self.defaultProfile,
   }
   self.player = ZO_SavedVars:NewCharacterIdSettings('BuffTimersSavedVariables', 1, nil, defaultPlayer)
 
@@ -717,29 +717,25 @@ function BuffTimers:SettingsLoad()
 end
 
 function BuffTimers:SettingsLoadBars()
-  local dstData
-  local srcData
   for i=1, self.settings.numberBars do
-    dstData = self.settings.barData[i]
-    if dstData == nil then
-      dstData = ZO_DeepTableCopy(self.defaultBarData)
-      dstData.offset.y = dstData.offset.y + (50 * i)
+    if self.settings.barData[i] == nil then
+      self.settings.barData[i] = ZO_DeepTableCopy(self.defaultBarData)
+      self.settings.barData[i].offset.y = self.settings.barData[i].offset.y + (50 * i)
     else
-      self:SettingsLoadBarsCopyDefaults(dstData)
+      self:SettingsLoadBarsCopyDefaults(self.settings.barData[i])
     end
   end
   for i=1, #self.groupBuffs do
-    srcData = self.groupBuffs[i]
-    dstData = self.settings.groupBuffData[srcData.barNumber]
-    if dstData == nil then
-      dstData = ZO_DeepTableCopy(self.defaultBarData)
-      dstData.track         = false
-      dstData.offset.x      = dstData.offset.x + 200
-      dstData.offset.y      = dstData.offset.y + (50 * i)
-      dstData.buffName      = srcData.name
-      dstData.icon.texture  = srcData.iconTexture
+    local srcData = self.groupBuffs[i]
+    if self.settings.groupBuffData[srcData.barNumber] == nil then
+      self.settings.groupBuffData[srcData.barNumber] = ZO_DeepTableCopy(self.defaultBarData)
+      self.settings.groupBuffData[srcData.barNumber].track        = false
+      self.settings.groupBuffData[srcData.barNumber].offset.x     = self.settings.groupBuffData[srcData.barNumber].offset.x + 200
+      self.settings.groupBuffData[srcData.barNumber].offset.y     = self.settings.groupBuffData[srcData.barNumber].offset.y + (50 * i)
+      self.settings.groupBuffData[srcData.barNumber].buffName     = srcData.name
+      self.settings.groupBuffData[srcData.barNumber].icon.texture = srcData.iconTexture
     else
-      self:SettingsLoadBarsCopyDefaults(dstData)
+      self:SettingsLoadBarsCopyDefaults(self.settings.groupBuffData[srcData.barNumber])
     end
   end
 end
