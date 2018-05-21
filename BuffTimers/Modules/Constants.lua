@@ -1,6 +1,6 @@
 BuffTimers = {
   name    = 'BuffTimers',
-  version = '2.18.2',
+  version = '2.18.3',
   author  = 'coolmodi, Uta',
 }
 
@@ -22,6 +22,11 @@ BuffTimers.defaultBarData = {
   notification    = {threshold = 2, sound = 'none', text = true, customText = ''},
 }
 
+BuffTimers.targetEffectTypes = {
+  [EFFECT_RESULT_GAINED]  = true,
+  [EFFECT_RESULT_UPDATED] = true,
+}
+
 BuffTimers.GROUP_BUFF_WARHORN = 21
 BuffTimers.GROUP_BUFF_ALKOSH  = 22
 BuffTimers.groupBuffs = {
@@ -37,18 +42,9 @@ BuffTimers.groupBuffs = {
   },
 }
 BuffTimers.groupBuffsAbilityId = {
-  [38563] = BuffTimers.GROUP_BUFF_WARHORN, -- War Horn I           #TODO: confirm AbilityId
-  [46526] = BuffTimers.GROUP_BUFF_WARHORN, -- War Horn II          #TODO: confirm AbilityId
-  [46528] = BuffTimers.GROUP_BUFF_WARHORN, -- War Horn III         #TODO: confirm AbilityId
-  [46530] = BuffTimers.GROUP_BUFF_WARHORN, -- War Horn IV
-  [40224] = BuffTimers.GROUP_BUFF_WARHORN, -- Aggressive Horn I
-  [46532] = BuffTimers.GROUP_BUFF_WARHORN, -- Aggressive Horn II
-  [46535] = BuffTimers.GROUP_BUFF_WARHORN, -- Aggressive Horn III
-  [46538] = BuffTimers.GROUP_BUFF_WARHORN, -- Aggressive Horn IV
-  [40221] = BuffTimers.GROUP_BUFF_WARHORN, -- Sturdy Horn I
-  [46541] = BuffTimers.GROUP_BUFF_WARHORN, -- Sturdy Horn II
-  [46544] = BuffTimers.GROUP_BUFF_WARHORN, -- Sturdy Horn III
-  [46547] = BuffTimers.GROUP_BUFF_WARHORN, -- Sturdy Horn IV
+  [38564] = BuffTimers.GROUP_BUFF_WARHORN, -- War Horn
+  [40224] = BuffTimers.GROUP_BUFF_WARHORN, -- Aggressive Horn
+  [40221] = BuffTimers.GROUP_BUFF_WARHORN, -- Sturdy Horn
   [76667] = BuffTimers.GROUP_BUFF_ALKOSH,  -- Roar of Alkosh
 }
 

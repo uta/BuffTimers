@@ -19,7 +19,7 @@ function BuffTimers.EventEffectChanged(eventCode, changeType, effectSlot, effect
     if BuffTimers.debug then
       BuffTimers:DebugEvent(changeType, effectName, beginTime, endTime, abilityId)
     end
-    if changeType == EFFECT_RESULT_GAINED then
+    if BuffTimers.targetEffectTypes[changeType] then
       barNumber = BuffTimers.settings.buffNames[effectName]
       if barNumber then
         BuffTimers:WindowStart(barNumber, beginTime, endTime, iconName)
@@ -29,9 +29,8 @@ function BuffTimers.EventEffectChanged(eventCode, changeType, effectSlot, effect
         BuffTimers:WindowStartGroupBuff(barNumber, beginTime, endTime)
       end
     end
-  end
-  if sourceType == COMBAT_UNIT_TYPE_GROUP then
-    if changeType == EFFECT_RESULT_GAINED then
+  elseif sourceType == COMBAT_UNIT_TYPE_GROUP then
+    if BuffTimers.targetEffectTypes[changeType] then
       barNumber = BuffTimers.groupBuffsAbilityId[abilityId]
       if barNumber then
         BuffTimers:WindowStartGroupBuff(barNumber, beginTime, endTime)
