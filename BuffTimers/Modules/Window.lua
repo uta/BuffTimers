@@ -151,3 +151,7 @@ function BuffTimers:WindowStop(barNumber)
   end
   self.activeBars[barNumber] = nil
 end
+
+function BuffTimers:WindowStopByFade(barNumber)
+  self:WindowStop(barNumber)
+end

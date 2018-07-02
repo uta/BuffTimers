@@ -28,6 +28,13 @@ function BuffTimers.EventEffectChanged(eventCode, changeType, effectSlot, effect
       if barNumber then
         BuffTimers:WindowStartGroupBuff(barNumber, beginTime, endTime)
       end
+    elseif changeType == EFFECT_RESULT_FADED then
+      if BuffTimers.acceptFadeAbilityId[abilityId] then
+        barNumber = BuffTimers.settings.buffNames[effectName]
+        if barNumber then
+          BuffTimers:WindowStopByFade(barNumber)
+        end
+      end
     end
   elseif sourceType == COMBAT_UNIT_TYPE_GROUP then
     if BuffTimers.targetEffectTypes[changeType] then

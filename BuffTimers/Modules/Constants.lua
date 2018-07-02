@@ -1,6 +1,6 @@
 BuffTimers = {
   name    = 'BuffTimers',
-  version = '2.18.3',
+  version = '2.18.4',
   author  = 'coolmodi, Uta',
 }
 
@@ -27,6 +27,13 @@ BuffTimers.targetEffectTypes = {
   [EFFECT_RESULT_UPDATED] = true,
 }
 
+BuffTimers.acceptFadeAbilityId = {
+  [21007] = true, -- Reflective Scale
+  [21014] = true, -- Reflective Plate
+  [21017] = true, -- Dragon Fire Scale
+  [24574] = true, -- Defensive Rune
+}
+
 BuffTimers.GROUP_BUFF_WARHORN = 21
 BuffTimers.GROUP_BUFF_ALKOSH  = 22
 BuffTimers.groupBuffs = {
@@ -43,8 +50,8 @@ BuffTimers.groupBuffs = {
 }
 BuffTimers.groupBuffsAbilityId = {
   [38564] = BuffTimers.GROUP_BUFF_WARHORN, -- War Horn
-  [40224] = BuffTimers.GROUP_BUFF_WARHORN, -- Aggressive Horn
   [40221] = BuffTimers.GROUP_BUFF_WARHORN, -- Sturdy Horn
+  [40224] = BuffTimers.GROUP_BUFF_WARHORN, -- Aggressive Horn
   [76667] = BuffTimers.GROUP_BUFF_ALKOSH,  -- Roar of Alkosh
 }
 
