@@ -285,7 +285,11 @@ function BuffTimers:SettingsBuildMenu()
               for k, v in pairs(self.settings.buffNames) do
                 if v == i then self.settings.buffNames[k] = nil end
               end
-              self.settings.buffNames[value] = i
+              if tonumber(value) then
+                self.settings.buffNames[tonumber(value)] = i
+              else
+                self.settings.buffNames[value] = i
+              end
               self.settings.barData[i].buffName = value
             end,
           },

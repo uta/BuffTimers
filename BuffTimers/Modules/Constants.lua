@@ -1,6 +1,6 @@
 BuffTimers = {
   name    = 'BuffTimers',
-  version = '2.19.0',
+  version = '2.19.1',
   author  = 'coolmodi, Uta',
 }
 
@@ -32,7 +32,11 @@ BuffTimers.acceptFadeAbilityId = {
   [21014] = true, -- Reflective Plate
   [21017] = true, -- Dragon Fire Scale
   [24574] = true, -- Defensive Rune
+  [28727] = true, -- Defensive Posture
+  [38312] = true, -- Defensive Stance
+  [38317] = true, -- Absorb Magic
   [46327] = true, -- Crystal Fragments Proc
+  [63151] = true, -- Vengeance
   [79089] = true, -- Varen's Wall
 }
 

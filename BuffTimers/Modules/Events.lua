@@ -20,7 +20,7 @@ function BuffTimers.EventEffectChanged(eventCode, changeType, effectSlot, effect
       BuffTimers:DebugEvent(changeType, effectName, beginTime, endTime, abilityId)
     end
     if BuffTimers.targetEffectTypes[changeType] then
-      barNumber = BuffTimers.settings.buffNames[effectName]
+      barNumber = BuffTimers:BarNumber(effectName, abilityId)
       if barNumber then
         BuffTimers:WindowStart(barNumber, beginTime, endTime, iconName)
       end
@@ -30,7 +30,7 @@ function BuffTimers.EventEffectChanged(eventCode, changeType, effectSlot, effect
       end
     elseif changeType == EFFECT_RESULT_FADED then
       if BuffTimers.acceptFadeAbilityId[abilityId] then
-        barNumber = BuffTimers.settings.buffNames[effectName]
+        barNumber = BuffTimers:BarNumber(effectName, abilityId)
         if barNumber then
           BuffTimers:WindowStopByFade(barNumber)
         end

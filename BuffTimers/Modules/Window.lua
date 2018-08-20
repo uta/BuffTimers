@@ -12,7 +12,7 @@ function BuffTimers:WindowApplySettings(barNumber, settings)
   if settings.reverse then
     self.windows[barNumber].bar:SetBarAlignment(1)
     self.windows[barNumber].icon:ClearAnchors()
-    self.windows[barNumber].icon:SetAnchor(LEFT, self.windows[barNumber].container, RIGHT, -1, 0)
+    self.windows[barNumber].icon:SetAnchor(LEFT, self.windows[barNumber].container, RIGHT, 1, 0)
   else
     self.windows[barNumber].bar:SetBarAlignment(0)
     self.windows[barNumber].icon:ClearAnchors()
