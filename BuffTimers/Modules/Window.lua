@@ -1,27 +1,37 @@
 function BuffTimers:WindowApplySettings(barNumber, settings)
-  self.windows[barNumber]:SetWidth(settings.width)
-  self.windows[barNumber]:SetHeight(settings.height)
+  self.windows[barNumber]:SetWidth(settings.width + settings.icon.size + 1)
+  if (settings.height > settings.icon.size) then
+    self.windows[barNumber]:SetHeight(settings.height)
+  else
+    self.windows[barNumber]:SetHeight(settings.icon.size)
+  end
   self.windows[barNumber]:ClearAnchors()
   self.windows[barNumber]:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, settings.offset.x, settings.offset.y)
   self.windows[barNumber]:SetMouseEnabled(not settings.locked)
   self.windows[barNumber]:SetMovable(not settings.locked)
   self.windows[barNumber].container:SetHidden(not settings.alwaysShow)
-  self.windows[barNumber].background:SetEdgeColor(unpack(settings.colorEdge))
-  self.windows[barNumber].background:SetCenterColor(unpack(settings.colorBackground))
-  self.windows[barNumber].bar:SetGradientColors(unpack(settings.colorBar))
-  if settings.reverse then
-    self.windows[barNumber].bar:SetBarAlignment(1)
-    self.windows[barNumber].icon:ClearAnchors()
-    self.windows[barNumber].icon:SetAnchor(LEFT, self.windows[barNumber].container, RIGHT, 1, 0)
-  else
-    self.windows[barNumber].bar:SetBarAlignment(0)
-    self.windows[barNumber].icon:ClearAnchors()
-    self.windows[barNumber].icon:SetAnchor(RIGHT, self.windows[barNumber].container, LEFT, -1, 0)
-  end
-  self.windows[barNumber].label:SetFont('$(BOLD_FONT)|'..tostring(settings.textSize)..'|soft-shadow-thin')
+  self.windows[barNumber].bar:SetWidth(settings.width)
+  self.windows[barNumber].bar:SetHeight(settings.height)
+  self.windows[barNumber].bar_back:SetEdgeColor(unpack(settings.colorEdge))
+  self.windows[barNumber].bar_back:SetCenterColor(unpack(settings.colorBackground))
+  self.windows[barNumber].bar_front:SetGradientColors(unpack(settings.colorBar))
+  self.windows[barNumber].bar_label:SetFont('$(BOLD_FONT)|'..tostring(settings.textSize)..'|soft-shadow-thin')
   self.windows[barNumber].icon:SetHidden(not settings.icon.show)
   self.windows[barNumber].icon:SetWidth(settings.icon.size)
   self.windows[barNumber].icon:SetHeight(settings.icon.size)
+  if settings.reverse then
+    self.windows[barNumber].bar:ClearAnchors()
+    self.windows[barNumber].bar:SetAnchor(LEFT, self.windows[barNumber].container, LEFT, 0, 0)
+    self.windows[barNumber].bar_front:SetBarAlignment(1)
+    self.windows[barNumber].icon:ClearAnchors()
+    self.windows[barNumber].icon:SetAnchor(RIGHT, self.windows[barNumber].container, RIGHT, 0, 0)
+  else
+    self.windows[barNumber].bar:ClearAnchors()
+    self.windows[barNumber].bar:SetAnchor(RIGHT, self.windows[barNumber].container, RIGHT, 0, 0)
+    self.windows[barNumber].bar_front:SetBarAlignment(0)
+    self.windows[barNumber].icon:ClearAnchors()
+    self.windows[barNumber].icon:SetAnchor(LEFT, self.windows[barNumber].container, LEFT, 0, 0)
+  end
   if settings.icon.customIcon then
     self.windows[barNumber].icon:SetTexture(settings.icon.customIconTexture)
   else
@@ -37,20 +47,22 @@ function BuffTimers:WindowCreate(barNumber)
   self.windows[barNumber].container = WINDOW_MANAGER:CreateControl('$(parent)Container', self.windows[barNumber], CT_CONTROL)
   self.windows[barNumber].container:SetAnchorFill()
 
-  self.windows[barNumber].background = WINDOW_MANAGER:CreateControl('$(parent)Background', self.windows[barNumber].container, CT_BACKDROP)
-  self.windows[barNumber].background:SetAnchorFill()
-  self.windows[barNumber].background:SetDrawLayer(1)
-  self.windows[barNumber].background:SetEdgeTexture(nil, 1, 1, 1, 1)
+  self.windows[barNumber].bar = WINDOW_MANAGER:CreateControl('$(parent)Bar', self.windows[barNumber].container, CT_CONTROL)
 
-  self.windows[barNumber].bar = WINDOW_MANAGER:CreateControl('$(parent)Bar', self.windows[barNumber].container, CT_STATUSBAR)
-  self.windows[barNumber].bar:SetAnchorFill()
-  self.windows[barNumber].bar:SetMinMax(0, 1)
+  self.windows[barNumber].bar_front = WINDOW_MANAGER:CreateControl('$(parent)Front', self.windows[barNumber].bar, CT_STATUSBAR)
+  self.windows[barNumber].bar_front:SetAnchorFill()
+  self.windows[barNumber].bar_front:SetMinMax(0, 1)
 
-  self.windows[barNumber].label = WINDOW_MANAGER:CreateControl('$(parent)Label', self.windows[barNumber].container, CT_LABEL)
-  self.windows[barNumber].label:SetAnchorFill()
-  self.windows[barNumber].label:SetVerticalAlignment(1)
-  self.windows[barNumber].label:SetHorizontalAlignment(1)
-  self.windows[barNumber].label:SetColor(1, 1, 1, 1)
+  self.windows[barNumber].bar_back = WINDOW_MANAGER:CreateControl('$(parent)Back', self.windows[barNumber].bar, CT_BACKDROP)
+  self.windows[barNumber].bar_back:SetAnchorFill()
+  self.windows[barNumber].bar_back:SetDrawLayer(1)
+  self.windows[barNumber].bar_back:SetEdgeTexture(nil, 1, 1, 1, 1)
+
+  self.windows[barNumber].bar_label = WINDOW_MANAGER:CreateControl('$(parent)Label', self.windows[barNumber].bar, CT_LABEL)
+  self.windows[barNumber].bar_label:SetAnchorFill()
+  self.windows[barNumber].bar_label:SetVerticalAlignment(1)
+  self.windows[barNumber].bar_label:SetHorizontalAlignment(1)
+  self.windows[barNumber].bar_label:SetColor(1, 1, 1, 1)
 
   self.windows[barNumber].icon = WINDOW_MANAGER:CreateControl('$(parent)Icon', self.windows[barNumber].container, CT_TEXTURE)
 
@@ -110,11 +122,11 @@ function BuffTimers:WindowSetIcon(barNumber, iconName)
 end
 
 function BuffTimers:WindowSetValue(barNumber, remainTime)
-  self.windows[barNumber].bar:SetValue(remainTime)
+  self.windows[barNumber].bar_front:SetValue(remainTime)
   if self.settings.updateSpeed < 500 then
-    self.windows[barNumber].label:SetText(('%02.01f'):format(remainTime))
+    self.windows[barNumber].bar_label:SetText(('%02.01f'):format(remainTime))
   else
-    self.windows[barNumber].label:SetText(('%d'):format(remainTime))
+    self.windows[barNumber].bar_label:SetText(('%d'):format(remainTime))
   end
 end
 
@@ -124,7 +136,7 @@ function BuffTimers:WindowStart(barNumber, beginTime, endTime, iconName)
     if self.settings.notification.enable then
       self.notificationStored[barNumber] = nil
     end
-    self.windows[barNumber].bar:SetMinMax(0, remainTime)
+    self.windows[barNumber].bar_front:SetMinMax(0, remainTime)
     self:WindowSetValue(barNumber, remainTime)
     self:WindowSetIcon(barNumber, iconName)
     self.windows[barNumber].container:SetHidden(false)

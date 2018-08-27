@@ -1,6 +1,6 @@
 ## Title: BuffTimers
 ## Author: coolmodi, Uta
-## Version: 2.19.1
+## Version: 2.19.2
 ## APIVersion: 100024
 ## SavedVariables: BuffTimersSavedVariables
 ## OptionalDependsOn: LibAddonMenu-2.0 LibStub

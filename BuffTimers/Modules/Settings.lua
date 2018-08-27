@@ -222,34 +222,40 @@ function BuffTimers:SettingsBuildMenu()
       name = ZO_ColorDef:New('6699ff'):Colorize('Bar Settings'),
     },
     {
-      type = 'slider',
-      name = 'Number of Bars',
-      min = 1,
-      max = 15,
-      step = 1,
-      warning = 'Reload UI',
-      getFunc = function() return self.settings.numberBars end,
-      setFunc = function(number)
-        self.settings.numberBars = number
-        for k, v in pairs(self.settings.buffNames) do
-          if v > number then
-            self.settings.buffNames[k]  = nil
-          end
-        end
-        while #self.settings.barData > number do
-          table.remove(self.settings.barData, (number + 1))
-        end
-        ReloadUI()
-      end,
-    },
-    {
-      type = 'slider',
-      name = 'Interval of refreshing bar (ms)',
-      min = 100,
-      max = 1000,
-      step = 100,
-      getFunc = function() return self.settings.updateSpeed end,
-      setFunc = function(number) self.settings.updateSpeed = number end,
+      type = 'submenu',
+      name = 'Common',
+      controls = {
+        {
+          type = 'slider',
+          name = 'Number of Bars',
+          min = 1,
+          max = 15,
+          step = 1,
+          warning = 'Reload UI',
+          getFunc = function() return self.settings.numberBars end,
+          setFunc = function(number)
+            self.settings.numberBars = number
+            for k, v in pairs(self.settings.buffNames) do
+              if v > number then
+                self.settings.buffNames[k]  = nil
+              end
+            end
+            while #self.settings.barData > number do
+              table.remove(self.settings.barData, (number + 1))
+            end
+            ReloadUI()
+          end,
+        },
+        {
+          type = 'slider',
+          name = 'Interval of refreshing bar (ms)',
+          min = 100,
+          max = 1000,
+          step = 100,
+          getFunc = function() return self.settings.updateSpeed end,
+          setFunc = function(number) self.settings.updateSpeed = number end,
+        },
+      },
     },
   })
 
