@@ -391,6 +391,15 @@ function BuffTimers:SettingsBuildMenu()
             end,
           },
           {
+            type = 'colorpicker',
+            name = 'Text Color',
+            getFunc = function() return unpack(self.settings.barData[i].colorLabel) end,
+            setFunc = function(r,g,b,a)
+              self.settings.barData[i].colorLabel = {r,g,b,a}
+              self:WindowApplySettings(i, self.settings.barData[i])
+            end,
+          },
+          {
             type = 'header',
             name = 'Icon Settings',
           },
@@ -412,6 +421,15 @@ function BuffTimers:SettingsBuildMenu()
             getFunc = function() return self.settings.barData[i].icon.size end,
             setFunc = function(number)
               self.settings.barData[i].icon.size = number
+              self:WindowApplySettings(i, self.settings.barData[i])
+            end,
+          },
+          {
+            type = 'colorpicker',
+            name = 'Color',
+            getFunc = function() return unpack(self.settings.barData[i].icon.color) end,
+            setFunc = function(r,g,b,a)
+              self.settings.barData[i].icon.color = {r,g,b,a}
               self:WindowApplySettings(i, self.settings.barData[i])
             end,
           },
@@ -613,6 +631,15 @@ function BuffTimers:SettingsBuildMenu()
           end,
         },
         {
+          type = 'colorpicker',
+          name = 'Text Color',
+          getFunc = function() return unpack(self.settings.groupBuffData[barNumber].colorLabel) end,
+          setFunc = function(r,g,b,a)
+            self.settings.groupBuffData[barNumber].colorLabel = {r,g,b,a}
+            self:WindowApplySettings(barNumber, self.settings.groupBuffData[barNumber])
+          end,
+        },
+        {
           type = 'header',
           name = 'Icon Settings',
         },
@@ -622,6 +649,15 @@ function BuffTimers:SettingsBuildMenu()
           getFunc = function() return self.settings.groupBuffData[barNumber].icon.show end,
           setFunc = function()
             self.settings.groupBuffData[barNumber].icon.show = not self.settings.groupBuffData[barNumber].icon.show
+            self:WindowApplySettings(barNumber, self.settings.groupBuffData[barNumber])
+          end,
+        },
+        {
+          type = 'colorpicker',
+          name = 'Color',
+          getFunc = function() return unpack(self.settings.groupBuffData[barNumber].icon.color) end,
+          setFunc = function(r,g,b,a)
+            self.settings.groupBuffData[barNumber].icon.color = {r,g,b,a}
             self:WindowApplySettings(barNumber, self.settings.groupBuffData[barNumber])
           end,
         },
@@ -699,6 +735,20 @@ function BuffTimers:SettingsBuildMenu()
   LAM2:RegisterOptionControls('BuffTimersPanel', optionControls)
 end
 
+function BuffTimers:SettingsDeepCopy(dstData, k, v)
+  if dstData[k] == nil then
+    if type(v) == 'table' then
+      dstData[k] = ZO_DeepTableCopy(v)
+    else
+      dstData[k] = v
+    end
+  elseif type(dstData[k]) == 'table' then
+    for k2, v2 in pairs(v) do
+      self:SettingsDeepCopy(dstData[k], k2, v2)
+    end
+  end
+end
+
 function BuffTimers:SettingsLoad()
   local defaultProfiles = {
     ['profileNames'] = {
@@ -753,12 +803,6 @@ end
 
 function BuffTimers:SettingsLoadBarsCopyDefaults(dstData)
   for k, v in pairs(self.defaultBarData) do
-    if dstData[k] == nil then
-      if type(v) == 'table' then
-        dstData[k] = ZO_DeepTableCopy(v)
-      else
-        dstData[k] = v
-      end
-    end
+    self:SettingsDeepCopy(dstData, k, v)
   end
 end
