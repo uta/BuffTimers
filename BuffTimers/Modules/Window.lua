@@ -105,9 +105,7 @@ function BuffTimers:WindowRefresh(barNumber, endTime)
     self:WindowStop(barNumber)
   else
     self:WindowSetValue(barNumber, remainTime)
-    if self.settings.notification.enable then
-      BuffTimers:NotificationPush(barNumber, endTime)
-    end
+    self:NotificationAdd(barNumber, endTime)
   end
 end
 
@@ -134,9 +132,7 @@ end
 function BuffTimers:WindowStart(barNumber, beginTime, endTime, iconName)
   local remainTime = endTime - beginTime
   if (remainTime > 0) and (self.activeBars[barNumber] == nil or self.activeBars[barNumber] < endTime) then
-    if self.settings.notification.enable then
-      self.notificationStored[barNumber] = nil
-    end
+    self:NotificationRemove(barNumber)
     self.windows[barNumber].bar_front:SetMinMax(0, remainTime)
     self:WindowSetValue(barNumber, remainTime)
     self:WindowSetIcon(barNumber, iconName)
@@ -167,4 +163,5 @@ end
 
 function BuffTimers:WindowStopByFade(barNumber)
   self:WindowStop(barNumber)
+  self:NotificationAdd(barNumber, GetFrameTimeSeconds())
 end

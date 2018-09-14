@@ -1,10 +1,32 @@
 BuffTimers.notifications = {}
-BuffTimers.notificationStored = {}
 
-function BuffTimers:NotificationInitialize()
+function BuffTimers:NotificationAdd(barNumber, endTime)
   if self.settings.notification.enable then
-    self:NotificationCreate()
-    self:NotificationApplySettings()
+    local nofiticationData
+    if barNumber > self.settings.numberBars then
+      nofiticationData = self.settings.groupBuffData[barNumber]
+    else
+      nofiticationData = self.settings.barData[barNumber]
+    end
+    if (endTime - GetFrameTimeSeconds()) < nofiticationData.notification.threshold then
+      if not self.notifications[barNumber] then
+        local notification = {
+          sound       = nofiticationData.notification.sound,
+          soundPlayed = false,
+          text        = nil,
+          endTime     = nil,
+        }
+        if nofiticationData.notification.text then
+          if nofiticationData.notification.customText == "" then
+            notification.text = nofiticationData.buffName
+          else
+            notification.text = nofiticationData.notification.customText
+          end
+          notification.endTime = GetFrameTimeSeconds() + self.settings.notification.duration
+        end
+        self.notifications[barNumber] = notification
+      end
+    end
   end
 end
 
@@ -39,6 +61,13 @@ function BuffTimers:NotificationCreate()
   end
 end
 
+function BuffTimers:NotificationInitialize()
+  if self.settings.notification.enable then
+    self:NotificationCreate()
+    self:NotificationApplySettings()
+  end
+end
+
 function BuffTimers:NotificationMoved()
   if self.settings.notification.enable then
     self.settings.notification.offset.x = self.notification:GetLeft() + (self.notification:GetWidth() / 2)
@@ -46,47 +75,31 @@ function BuffTimers:NotificationMoved()
   end
 end
 
-function BuffTimers:NotificationPush(barNumber, endTime)
-  if self.settings.notification.enable then
-    local nofiticationData
-    if barNumber > self.settings.numberBars then
-      nofiticationData = self.settings.groupBuffData[barNumber]
-    else
-      nofiticationData = self.settings.barData[barNumber]
-    end
-    if (endTime - GetFrameTimeSeconds()) < nofiticationData.notification.threshold then
-      if not self.notificationStored[barNumber] then
-        self.notificationStored[barNumber] = true
-        PlaySound(nofiticationData.notification.sound)
-        if nofiticationData.notification.text then
-          local text = ''
-          local time = GetFrameTimeSeconds() + self.settings.notification.duration
-          if nofiticationData.notification.customText == "" then
-            text = nofiticationData.buffName
-          else
-            text = nofiticationData.notification.customText
-          end
-          table.insert(self.notifications, {text, time})
-        end
-      end
-    end
-  end
-end
-
 function BuffTimers:NotificationRefresh()
   if self.settings.notification.enable then
-    while (#self.notifications > 0) and (self.notifications[1][2] < GetFrameTimeSeconds()) do
-      table.remove(self.notifications, 1)
-    end
-    if #self.notifications > 0 then
-      local text = {}
-      for i=1, #self.notifications do
-        table.insert(text, self.notifications[i][1])
+    local text = {}
+    for barNumber, notification in pairs(self.notifications) do
+      if notification.endTime < GetFrameTimeSeconds() then
+        self.notifications[barNumber] = nil
+      else
+        if not notification.soundPlayed then
+          PlaySound(notification.sound)
+          notification.soundPlayed = true
+        end
+        table.insert(text, notification.text)
       end
+    end
+    if #text > 0 then
       self.notification.label:SetText(table.concat(text, "\n"))
       self.notification:SetHidden(false)
     else
       self.notification:SetHidden(self.settings.notification.locked)
     end
+  end
+end
+
+function BuffTimers:NotificationRemove(barNumber)
+  if self.settings.notification.enable then
+    self.notifications[barNumber] = nil
   end
 end

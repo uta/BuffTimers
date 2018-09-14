@@ -460,6 +460,7 @@ function BuffTimers:SettingsBuildMenu()
         {
           type = 'slider',
           name = 'Threshold',
+          tooltip = '0 means no notifications',
           min = 0,
           max = 10,
           step = 0.5,
@@ -683,7 +684,7 @@ function BuffTimers:SettingsBuildMenu()
           {
             type = 'slider',
             name = 'Threshold',
-            tooltip = '0 means no notifications.',
+            tooltip = '0 means no notifications',
             min = 0,
             max = 10,
             step = 0.5,

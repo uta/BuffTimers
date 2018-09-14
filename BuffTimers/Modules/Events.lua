@@ -6,9 +6,7 @@ function BuffTimers.EventAddOnLoaded(event, addonName)
     BuffTimers:SettingsLoad()
     BuffTimers:SettingsBuildMenu()
     BuffTimers:WindowInitialize()
-    if BuffTimers.settings.notification.enable then
-      BuffTimers:NotificationInitialize()
-    end
+    BuffTimers:NotificationInitialize()
     EVENT_MANAGER:RegisterForEvent(BuffTimers.name, EVENT_EFFECT_CHANGED, BuffTimers.EventEffectChanged)
   end
 end
@@ -50,10 +48,8 @@ function BuffTimers.EventUpdate()
   for k, v in pairs(BuffTimers.activeBars) do
     BuffTimers:WindowRefresh(k, v)
   end
-  if BuffTimers.settings.notification.enable then
-    BuffTimers:NotificationRefresh()
-  end
-  if (#BuffTimers.notifications == 0) and (table.maxn(BuffTimers.activeBars) == 0) then
+  BuffTimers:NotificationRefresh()
+  if (table.maxn(BuffTimers.activeBars) == 0) and (table.maxn(BuffTimers.notifications) == 0) then
     EVENT_MANAGER:UnregisterForUpdate(BuffTimers.name)
     BuffTimers.eventUpdateActive = false
   end
