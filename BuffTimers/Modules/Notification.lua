@@ -2,19 +2,20 @@ BuffTimers.notifications = {}
 
 function BuffTimers:NotificationAdd(barNumber, endTime)
   if self.settings.notification.enable then
-    local nofiticationData
-    if barNumber > self.settings.numberBars then
-      nofiticationData = self.settings.groupBuffData[barNumber]
-    else
-      nofiticationData = self.settings.barData[barNumber]
-    end
-    if (endTime - GetFrameTimeSeconds()) < nofiticationData.notification.threshold then
-      if not self.notifications[barNumber] then
+    if self.notifications[barNumber] == nil then
+      local nofiticationData
+      if barNumber > self.settings.numberBars then
+        nofiticationData = self.settings.groupBuffData[barNumber]
+      else
+        nofiticationData = self.settings.barData[barNumber]
+      end
+      local remainTime = endTime - GetFrameTimeSeconds()
+      if ((nofiticationData.notification.threshold - 1.0) < remainTime) and (remainTime < nofiticationData.notification.threshold) then
         local notification = {
           sound       = nofiticationData.notification.sound,
           soundPlayed = false,
           text        = nil,
-          endTime     = nil,
+          endTime     = GetFrameTimeSeconds() + self.settings.notification.duration,
         }
         if nofiticationData.notification.text then
           if nofiticationData.notification.customText == "" then
@@ -22,7 +23,6 @@ function BuffTimers:NotificationAdd(barNumber, endTime)
           else
             notification.text = nofiticationData.notification.customText
           end
-          notification.endTime = GetFrameTimeSeconds() + self.settings.notification.duration
         end
         self.notifications[barNumber] = notification
       end
@@ -80,7 +80,7 @@ function BuffTimers:NotificationRefresh()
     local text = {}
     for barNumber, notification in pairs(self.notifications) do
       if notification.endTime < GetFrameTimeSeconds() then
-        self.notifications[barNumber] = nil
+        self:NotificationRemove(barNumber)
       else
         if not notification.soundPlayed then
           PlaySound(notification.sound)

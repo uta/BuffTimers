@@ -167,7 +167,7 @@ function BuffTimers:SettingsBuildMenu()
       {
         type = 'slider',
         name = 'Notification Duration',
-        min = 0.5,
+        min = 1,
         max = 10,
         step = 0.5,
         getFunc = function() return self.settings.notification.duration end,
