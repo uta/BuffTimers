@@ -1,23 +1,9 @@
 ## Title: BuffTimers
 ## Author: coolmodi, Uta
-## Version: 2.21.0
-## APIVersion: 100025 100026
+## Version: 2.21.1
+## APIVersion: 100026
 ## SavedVariables: BuffTimersSavedVariables
-## OptionalDependsOn: LibAddonMenu-2.0 LibStub
-
-Libraries/LibStub/LibStub.lua
-
-Libraries/LibAddonMenu-2.0/LibAddonMenu-2.0.lua
-Libraries/LibAddonMenu-2.0/controls/button.lua
-Libraries/LibAddonMenu-2.0/controls/checkbox.lua
-Libraries/LibAddonMenu-2.0/controls/colorpicker.lua
-Libraries/LibAddonMenu-2.0/controls/dropdown.lua
-Libraries/LibAddonMenu-2.0/controls/editbox.lua
-Libraries/LibAddonMenu-2.0/controls/header.lua
-Libraries/LibAddonMenu-2.0/controls/iconpicker.lua
-Libraries/LibAddonMenu-2.0/controls/panel.lua
-Libraries/LibAddonMenu-2.0/controls/slider.lua
-Libraries/LibAddonMenu-2.0/controls/submenu.lua
+## DependsOn: LibAddonMenu-2.0 LibStub
 
 Modules/Constants.lua
 Modules/ConvertOldData.lua
