@@ -1,6 +1,6 @@
 BuffTimers = {
   name    = 'BuffTimers',
-  version = '2.22.1',
+  version = '2.23.0',
   author  = 'coolmodi, Uta',
 }
 
@@ -41,10 +41,16 @@ BuffTimers.acceptFadeAbilityId = {
   [79089]   = true, -- Varen's Wall
   [114861]  = true, -- Blastbones
   [114863]  = true, -- Blastbones
+  [115924]  = true, -- Shocking Siphon
+  [116445]  = true, -- Shocking Siphon
   [117691]  = true, -- Blighted Blastbones
   [117692]  = true, -- Blighted Blastbones
   [117750]  = true, -- Stalking Blastbones
   [117751]  = true, -- Stalking Blastbones
+  [118008]  = true, -- Mystic Siphon
+  [118009]  = true, -- Mystic Siphon
+  [118763]  = true, -- Detonating Siphon
+  [118764]  = true, -- Detonating Siphon
 }
 
 BuffTimers.GROUP_BUFF_WARHORN = 21

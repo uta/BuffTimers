@@ -527,7 +527,7 @@ function BuffTimers:SettingsBuildMenu()
           name = 'Lock',
           getFunc = function() return self.settings.groupBuffData[barNumber].locked end,
           setFunc = function()
-            self.settings.groupBuffData[barNumber].groupBuffData = not self.settings.groupBuffData[barNumber].locked
+            self.settings.groupBuffData[barNumber].locked = not self.settings.groupBuffData[barNumber].locked
             self:WindowApplySettings(barNumber, self.settings.groupBuffData[barNumber])
           end,
         },
