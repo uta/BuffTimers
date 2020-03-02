@@ -5,8 +5,6 @@ local profileDeletable = false
 local profileDeleteTgt = BuffTimers.defaultProfile
 
 function BuffTimers:SettingsBuildMenu()
-  local LAM2 = LibStub('LibAddonMenu-2.0')
-
   local addonPanel = {
     type                = 'panel',
     name                = self.name,
@@ -732,8 +730,8 @@ function BuffTimers:SettingsBuildMenu()
     },
   })
 
-  LAM2:RegisterAddonPanel('BuffTimersPanel', addonPanel)
-  LAM2:RegisterOptionControls('BuffTimersPanel', optionControls)
+  LibAddonMenu2:RegisterAddonPanel('BuffTimersPanel', addonPanel)
+  LibAddonMenu2:RegisterOptionControls('BuffTimersPanel', optionControls)
 end
 
 function BuffTimers:SettingsDeepCopy(dstData, k, v)

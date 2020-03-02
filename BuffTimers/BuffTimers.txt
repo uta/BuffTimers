@@ -1,9 +1,10 @@
 ## Title: BuffTimers
+## Version: 2.25.1
+## AddOnVersion: 22501
+## APIVersion: 100030
 ## Author: coolmodi, Uta
-## Version: 2.25.0
-## APIVersion: 100029, 100030
 ## SavedVariables: BuffTimersSavedVariables
-## DependsOn: LibAddonMenu-2.0 LibStub
+## DependsOn: LibAddonMenu-2.0
 
 Modules/Constants.lua
 Modules/ConvertOldData.lua
