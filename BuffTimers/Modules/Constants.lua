@@ -1,6 +1,6 @@
 BuffTimers = {
   name    = 'BuffTimers',
-  version = '2.28.0',
+  version = '2.29.0',
   author  = 'coolmodi, Uta',
 }
 
@@ -39,6 +39,7 @@ BuffTimers.acceptFadeAbilityId = {
   [46327]   = true, -- Crystal Fragments Proc
   [63151]   = true, -- Vengeance
   [79089]   = true, -- Varen's Wall
+  [100306]  = true, -- Concentrated Force (Asylum Destruction Staff)
   [114861]  = true, -- Blastbones
   [114863]  = true, -- Blastbones
   [115924]  = true, -- Shocking Siphon
@@ -51,6 +52,8 @@ BuffTimers.acceptFadeAbilityId = {
   [118009]  = true, -- Mystic Siphon
   [118763]  = true, -- Detonating Siphon
   [118764]  = true, -- Detonating Siphon
+  [147843]  = true, -- Wrath of Elements (Vateshran Destruction Staff)
+  [147872]  = true, -- Force Overflow (Vateshran Restoration Staff)
 }
 
 BuffTimers.GROUP_BUFF_WARHORN = 21
