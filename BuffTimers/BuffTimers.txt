@@ -1,7 +1,7 @@
 ## Title: BuffTimers
-## Version: 2.29.0
-## AddOnVersion: 22900
-## APIVersion: 100033 100034
+## Version: 2.30.0
+## AddOnVersion: 23000
+## APIVersion: 100034 100035
 ## Author: coolmodi, Uta
 ## SavedVariables: BuffTimersSavedVariables
 ## DependsOn: LibAddonMenu-2.0
