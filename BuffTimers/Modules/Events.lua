@@ -13,7 +13,7 @@ end
 
 function BuffTimers.EventEffectChanged(eventCode, changeType, effectSlot, effectName, unitTag, beginTime, endTime, stackCount, iconName, buffType, effectType, abilityType, statusEffectType, unitName, unitId, abilityId, sourceType)
   local barNumber
-  if sourceType == COMBAT_UNIT_TYPE_PLAYER then
+  if sourceType == COMBAT_UNIT_TYPE_PLAYER or sourceType == COMBAT_UNIT_TYPE_PLAYER_PET then
     if BuffTimers.debug then
       BuffTimers:DebugEvent(changeType, effectName, beginTime, endTime, abilityId)
     end

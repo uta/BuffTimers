@@ -1,6 +1,6 @@
 BuffTimers = {
   name    = 'BuffTimers',
-  version = '2.31.0',
+  version = '2.31.2',
   author  = 'coolmodi, Uta',
 }
 
